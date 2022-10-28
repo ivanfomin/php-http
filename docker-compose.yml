@@ -1,0 +1,54 @@
+version: "3.8"
+services:
+    nginx:
+        build:
+            context: docker/nginx-php
+        ports:
+            -   "8080:80"
+        volumes:
+            -   ./:/app
+        networks:
+            - internal_test_net
+        depends_on:
+            -   php-fpm
+
+    php-fpm:
+        build:
+            context: docker/php-fpm
+        volumes:
+            -   ./:/app
+        networks:
+            - internal_test_net
+        depends_on:
+            -   postgres
+        environment:
+            PHP_IDE_CONFIG: serverName=API
+
+    php-cli:
+        build:
+            context: docker/php-cli
+        volumes:
+            -   ./:/app
+
+    postgres:
+        image: postgres:14
+        ports:
+            -   "5433:5432"
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: postgres
+        volumes:
+            -   pgdate:/var/lib/postgresql/data
+
+volumes:
+    pgdate:
+
+networks:
+ internal_test_net:
+  driver: bridge
+  ipam:
+   driver: default
+   config:
+    - subnet: 192.168.221.0/28
+

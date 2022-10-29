@@ -10,9 +10,14 @@ RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
 
 COPY xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
+
+COPY entrypoint.sh /usr/local/bin/docker-php-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-php-entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/docker-php-entrypoint.sh"]
+
+
+
+
+
 WORKDIR /app
-
-COPY entrypoint.sh /usr/local/bin/docker-php-entrypoint
-RUN chmod +x /usr/local/bin/docker-php-entrypoint
-
 

@@ -23,7 +23,7 @@ services:
             -   postgres
         environment:
             PHP_IDE_CONFIG: serverName=API
-        restart: always
+
 
     php-cli:
         build:

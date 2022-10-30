@@ -4,7 +4,7 @@ services:
         build:
             context: docker/nginx-php
         ports:
-            -   "8080:80"
+            -   "80:80"
         volumes:
             -   ./:/app
         networks:
@@ -22,7 +22,7 @@ services:
         depends_on:
             -   postgres
         environment:
-            PHP_IDE_CONFIG: serverName=API
+            PHP_IDE_CONFIG: "serverName=Docker"
 
 
     php-cli:
@@ -30,6 +30,8 @@ services:
             context: docker/php-cli
         volumes:
             -   ./:/app
+        environment:
+            PHP_IDE_CONFIG: "serverName=Docker"
 
     postgres:
         image: postgres:14

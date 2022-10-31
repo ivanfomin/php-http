@@ -11,4 +11,4 @@ echo $x;
 $x *= 2;
 echo $x;
 
-//phpinfo();
+#phpinfo();
